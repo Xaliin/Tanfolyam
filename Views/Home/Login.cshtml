@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "Bejelentkezés";
+}
+<section class="maintext">
+    <h1>Jelentkezz be!</h1>
+</section>
+<section>
+    <div>
+        <form action="/action_page.php" method="get" id="loginform">
+            <label for="username">Felhasználónév</label>
+            <input type="text" id="username" name="username" placeholder="..."><br>
+            <label for="pwd">Jelszó</label>
+            <input type="password" id="pwd" name="pwd" placeholder="...">
+        </form>
+    </div>
+    <div>
+        <button type="submit" form="loginform" value="Submit">Bejelentkezés</button>
+    </div>
+</section>
