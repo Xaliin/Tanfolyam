@@ -21,8 +21,10 @@ namespace Tanfolyam.Models.Data.Classes
         public ISchedule Schedule { get; set; }
         public Status Status { get; set; }
 
-        public Course(string name, CourseType type, ITeacher teacher, IHeadcount headcount, string description, double price, ISchedule schedule, Status status)
+        public Course(string name, CourseType type, ITeacher teacher, string description, double price, ISchedule schedule)
         {
+            Headcount headcount = new(this);
+
             this.Name = name;
             this.Type = type;
             this.Teacher = teacher;
@@ -30,7 +32,7 @@ namespace Tanfolyam.Models.Data.Classes
             this.Description = description;
             this.Price = price;
             this.Schedule = schedule;
-            this.Status = status;
+            this.Status = Status.Inactive;
         }
 
         public Course()

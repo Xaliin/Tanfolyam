@@ -1,0 +1,103 @@
+﻿@{
+    ViewData["Title"] = "Adminisztráció";
+}
+
+<section class="maintext">
+    <h1>Adminisztrációs felület</h1><hr />
+</section>
+<section class="adminsection">
+        <div>
+            <h3>Idei kezdőegyenleg módosítása</h3>
+            <input type="number" class="admininput" placeholder="..."/> Ft
+            <button type="submit">Mentés</button>
+        </div>
+</section>
+<section class="adminsection">
+    <div>
+        <form asp-action="AddTeacher" asp-controller="Admin" id="teacher" method="post">
+        <h3>Oktató felvétele</h3>
+        <input type="text" class="admininput" placeholder="Oktató neve..." />
+        <button type="submit">Felvétel</button>
+        </form>
+    </div>
+    <div>
+        tanárok kilistázása törlés gombbal?
+    </div>
+</section>
+<section class="adminsection">
+    <form id="course" method="post" asp-controller="Admin" asp-action="AddCourse">
+    <h3>Tanfolyamok hozzáadása</h3>
+        <input type="text" class="admininput" maxlength="30" placeholder="Megnevezés" />
+    <br />
+        <label for="type">Típus</label> <br />
+        <input type="radio" id="offline" name="type" value="offline" checked />
+        <label for="offline">Személyes</label> <br />
+        <input type="radio" id="online" name="type" value="online" />
+        <label for="offline">Online</label>
+        <br />
+
+        <label for="teachers">Kijelölt oktató:</label> <br />
+        <select name="teachers" id="teachers">
+            <option value="tanár1">tanár1</option>
+            <option value="tanár2">tanár2</option>
+            <option value="tanár3">tanár3</option>
+            <option value="tanár4">tanár4</option>
+        </select>
+        <br />
+        <textarea id="description" class="admininput admininput-desc" maxlength="50" placeholder="Képzés témája..."></textarea>
+        <br />
+        <label for="price">Ár</label> <br />
+        <input type="number" class="admininput" placeholder="..." /> Ft
+        <br />
+        <input type="number" class="admininput" placeholder="Kurzus hossza" /> óra <br />
+        <label for="deadline">Jelentkezési határidő:</label> <br />
+        <input id="deadline" class="admininput"
+               type="datetime-local"
+               name="deadline"
+               value="" />
+        <br />
+        <button type="submit">Hozzáadás</button>
+    </form>
+</section>
+<section class="adminsection">
+    <h3>Tanfolyamok módosítása/törlése</h3>
+    <div>
+        <input type="text" class="filter" placeholder="Keresés oktató nevére...">
+    </div>
+        <div>
+            <ul class="bg-bubble">
+                <li class="li-bg">
+                    <span class="listitem">Kurzus #1 ide jön majd sok sok információ erről a kurzusról</span>
+                    <span class="multibutton">
+                        <button class="li-btn">Módosítás</button>
+                        <button class="li-btn">Felvesz</button>
+                    </span>
+                </li>
+                <li class="li-bg">
+                    <span class="listitem">Kurzus #2</span>
+                    <span class="multibutton">
+                        <button class="li-btn">Módosítás</button>
+                        <button class="li-btn">Felvesz</button>
+                    </span>
+                </li>
+                <li class="li-bg">
+                    <span class="listitem">Kurzus #3</span>
+                    <span class="multibutton">
+                        <button class="li-btn">Módosítás</button>
+                        <button class="li-btn">Felvesz</button>
+                   </span>
+                </li>
+                <li class="li-bg">
+                    <span class="listitem">Kurzus #4</span>
+                    <span class="multibutton">
+                        <button class="li-btn">Módosítás</button>
+                        <button class="li-btn">Felvesz</button>
+                    </span>
+                </li>   
+            </ul>
+        </div>
+</section>
+<section>
+    <h3>Statisztika</h3>
+    idejönnek a kördiagrammok
+</section>

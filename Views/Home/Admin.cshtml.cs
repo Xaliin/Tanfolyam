@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace TanfolyamNyilvantarto.Views.Home
+namespace Tanfolyam.Views.Home
 {
     public class StatisticsModel : PageModel
     {

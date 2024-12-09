@@ -1,0 +1,40 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Tanfolyam.Models.Data.Interfaces
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@model IEnumerable<ICourse>
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <section class="maintext">
+        <h1>Jelentkezz az alábbi kurzusok közül:</h1>
+    </section>
+    <section class="info">
+        <div>
+            <input type="text" class="filter" placeholder="Keresés oktató nevére...">
+        </div>
+        <div class="balance">
+            <p>Idei kezdőegyenleg: 130.000 Ft</p>
+            <p>Még ennyit tudsz elkölteni: 25.000 Ft</p>
+        </div>
+    </section>
+    <section>
+        <div>
+            <ul class="bg-bubble">
+                @foreach (var course in Model)
+                {
+                    <li class="li-bg">
+                        <span class="listitem">@course.Name, @course.Type, @course.Teacher, @course.Headcount, @course.Description, @course.Price, @course.Schedule.ToString(), @course.Status</span>
+                        <span><button class="li-btn">Felvesz</button></span>
+                    </li>
+                }
+            </ul>
+        </div>
+    </section>
+}
+else
+{
+    <section class="maintext">
+        <h1>Jelentkezz be!</h1>
+    </section>
+}

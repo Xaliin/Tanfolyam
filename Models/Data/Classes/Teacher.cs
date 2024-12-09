@@ -11,5 +11,16 @@ namespace Tanfolyam.Models.Data.Classes
         public int Id { get; set; }
         public string Name { get; set; }
         public ICollection<ICourse> Courses { get; }
+
+        public Teacher(string name)
+        {
+            this.Name = name;
+            Courses = new List<ICourse>();
+        }
+
+        public Teacher()
+        {
+            
+        }
     }
 }

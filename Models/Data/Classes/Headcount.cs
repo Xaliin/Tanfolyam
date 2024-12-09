@@ -13,5 +13,18 @@ namespace Tanfolyam.Models.Data.Classes
         public ICourse Course { get; set; }
         public int Minimum { get; set; }
         public int Maximum { get; set; }
+
+        public Headcount(ICourse course)
+        {
+            Students = new List<IStudent>();
+            Course = course;
+            Minimum = TanfolyamConstants.HeadcountMinimum;
+            Maximum = TanfolyamConstants.HeadcountMaximum;
+        }
+
+        public Headcount()
+        {
+            
+        }
     }
 }

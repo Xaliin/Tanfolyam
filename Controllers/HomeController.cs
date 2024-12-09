@@ -1,21 +1,25 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Tanfolyam.Models;
+using Tanfolyam.Models.Data.Interfaces;
 
 namespace Tanfolyam.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IRepository repository;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IRepository _repository)
         {
             _logger = logger;
+            this.repository = _repository;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var courses = await repository.GetAllCourses();
+            return View("Index", courses);
         }
 
         public IActionResult Privacy()

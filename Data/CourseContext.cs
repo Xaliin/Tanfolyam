@@ -7,7 +7,6 @@ namespace Tanfolyam.Data
     public class CourseContext : IdentityDbContext
     {
         public DbSet<Course> Courses { get; set; }
-        public DbSet<Credentials> Credentials { get; set; }
         public DbSet<Headcount> Headcount { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
@@ -15,22 +14,11 @@ namespace Tanfolyam.Data
 
 
 
-        public string DbPath { get; }
 
         public CourseContext(DbContextOptions<CourseContext> options) : base(options)
         {
-            var folder = Environment.SpecialFolder.LocalApplicationData;
-            var path = Environment.GetFolderPath(folder);
-            DbPath = System.IO.Path.Join(path, "blogging.db");
         }
 
-        public CourseContext()
-        {
-            
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
-            => options.UseSqlite($"Data Source={DbPath}");
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -39,7 +27,8 @@ namespace Tanfolyam.Data
             modelBuilder.Entity<Course>()
                 .HasOne(c => (Headcount)c.Headcount)
                 .WithMany()
-                .HasForeignKey("CourseId");
+                .HasForeignKey("CourseId")
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Headcount>()
                 .HasOne(l => (Course)l.Course)
@@ -54,11 +43,6 @@ namespace Tanfolyam.Data
             modelBuilder.Entity<Student>()
                 .HasMany(s => (ICollection<Course>)s.Courses)
                 .WithOne()
-                .HasForeignKey("StudentId");
-
-            modelBuilder.Entity<Student>()
-                .HasOne(s => (Credentials)s.Credentials)
-                .WithMany()
                 .HasForeignKey("StudentId");
 
             modelBuilder.Entity<Course>()

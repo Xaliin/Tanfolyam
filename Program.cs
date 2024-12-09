@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Tanfolyam.Data;
+using Tanfolyam.Models.Data.Classes;
+using Tanfolyam.Models.Data.Interfaces;
 
 namespace Tanfolyam
 {
@@ -13,12 +15,14 @@ namespace Tanfolyam
             // Add services to the container.
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             builder.Services.AddDbContext<CourseContext>(options =>
-                options.UseSqlite(connectionString));
+                options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
             builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<CourseContext>();
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddScoped<IRepository, Repository>();
 
             var app = builder.Build();
 
