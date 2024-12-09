@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Tanfolyam.Views.Home
+namespace Tanfolyam.Views.Course
 {
-    public class StatisticsModel : PageModel
+    public class MyCoursesModel : PageModel
     {
         public void OnGet()
         {

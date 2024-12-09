@@ -19,7 +19,7 @@ namespace Tanfolyam.Controllers
         public async Task<IActionResult> Index()
         {
             var courses = await repository.GetAllCourses();
-            return View("Index", courses);
+            return View("HomeIndex", courses);
         }
 
         public IActionResult Privacy()
@@ -27,24 +27,7 @@ namespace Tanfolyam.Controllers
             return View();
         }
 
-        public IActionResult MyCourses()
-        {
-            return View();
-        }
-
-        public IActionResult Statistics()
-        {
-            return View();
-        }
-        public IActionResult Login()
-        {
-            return View();
-        }
-        public IActionResult Register()
-        {
-            return View();
-        }
-
+        
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

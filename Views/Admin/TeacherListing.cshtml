@@ -1,0 +1,34 @@
+﻿@model IEnumerable<Tanfolyam.Models.Data.Classes.Teacher>
+
+@{
+    ViewData["Title"] = "TeacherListing";
+}
+
+<h1>TeacherListing</h1>
+
+<p>
+    <a asp-area="Admin" asp-controller="Admin" asp-action="OpenAddTeacherView">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                <a asp-area="Admin" asp-controller="Admin" asp-action="OpenTeacherEditView" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="DeleteTeacher" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
