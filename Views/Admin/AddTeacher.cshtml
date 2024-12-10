@@ -4,28 +4,27 @@
     ViewData["Title"] = "AddTeacher";
 }
 
-<h1>AddTeacher</h1>
+<h1>Oktató felvétele</h1>
 
-<h4>Teacher</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
+<div>
+    <div class="form-bg">
         <form asp-action="AddTeacher">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
+                <label asp-for="Name" class="control-label form-label">Oktató neve</label>
+                <input asp-for="Name" class="form-control form-input" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Felvesz" class="btn btn-primary form-btn"/>
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="TeacherListing">Back to List</a>
 </div>
 
 @section Scripts {

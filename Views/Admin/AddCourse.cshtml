@@ -4,46 +4,41 @@
     ViewData["Title"] = "AddCourse";
 }
 
-<h1>AddCourse</h1>
+<h1>Tanfolyam hozzáadása</h1>
 
-<h4>Course</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
+<div>
+    <div class="form-bg">
         <form asp-action="AddCourse">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
+                <label asp-for="Name" class="control-label form-label">Megnevezés</label>
+                <input asp-for="Name" class="form-control form-input maxlength="30" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Teacher" class="control-label"></label>
-                <select asp-for="Teacher" class="form-control"></select>
+                <label asp-for="Teacher" class="control-label form-label">Kijelölt oktató</label>
+                <select asp-for="Teacher" class="form-control form-input"></select>
                 <span asp-validation-for="Teacher" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Type" class="control-label"></label>
-                <select asp-for="Type" class="form-control" asp-items="ViewBag.courseTypes"></select>
+                <label asp-for="Type" class="control-label form-label">Előadás típusa</label>
+                <select asp-for="Type" class="form-control form-input" asp-items="ViewBag.courseTypes"></select>
                 <span asp-validation-for="Type" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
+                <label asp-for="Description" class="control-label form-label">Kurzus témája</label>
+                <input asp-for="Description" class="form-control form-input admininput-desc" maxlength="50" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
+                <label asp-for="Price" class="control-label form-label">Ár (Ft)</label>
+                <input asp-for="Price" class="form-control form-input" />
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
+            lengthinhour, deadline
             <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary form-btn" />
             </div>
         </form>
     </div>

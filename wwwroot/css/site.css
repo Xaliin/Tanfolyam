@@ -179,11 +179,21 @@ footer {
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 20px;
+    margin-top: 20px;
     box-shadow: 1px 1px 5px gray;
-    color: white;
+    color: #ffeed4;
     font-weight: bold;
     font-size: 25px;
     text-shadow: 1px 1px 5px black;
+}
+
+.form-label {
+    margin-top: 20px;
+    margin-bottom: -10px;
+    color: #ff9021;
+    font-weight: bold;
+    font-size: 22px;
+    text-shadow: 1px 0px 2px black;
 }
 
 .logoutbtn {
@@ -217,10 +227,14 @@ footer {
 }
 
 .admininput {
+    margin-left: 10px;
     border-radius: 25px;
     border: none;
     padding: 3px 10px;
     box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.2);
+    height: 40px;
+    font-size: larger;
+    background-color: #ffeed4
 }
 
 .admininput-desc {
@@ -232,6 +246,28 @@ footer {
 h3 {
     font-size: 30px;
     font-weight: bold;
-    color: #ff4d3d;
-    text-shadow: 0px 0px 5px #495400;
+    color: #ff9021;
+    text-shadow: 1px 1px 2px #495400;
+}
+
+a {
+    text-decoration-color: #ff9021;
+    color: black;
+}
+
+a:hover {
+    text-decoration-color: #a1ba00;
+}
+
+.save-btn {
+    margin-left: 10px;
+    border-radius: 25px;
+    border: none;
+    background-color: #ff9021;
+    box-shadow: 1px 1px 5px gray;
+    color: #ffeed4;
+    font-weight: bold;
+    font-size: 17px;
+    text-shadow: 1px 1px 5px black;
+    width: 80px;
 }
