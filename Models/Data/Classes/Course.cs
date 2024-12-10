@@ -23,7 +23,7 @@ namespace Tanfolyam.Models.Data.Classes
 
         public Course(string name, CourseType type, ITeacher teacher, string description, double price, ISchedule schedule)
         {
-            Headcount headcount = new(this);
+            Headcount headcount = new();
 
             this.Name = name;
             this.Type = type;

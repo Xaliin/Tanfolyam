@@ -15,6 +15,10 @@ namespace Tanfolyam.Models.Data.Classes
             this.LengthInHour = lengthInHour;
             this.RegistrationDeadline = registrationDeadline;
         }
+        public Schedule()
+        {
+            
+        }
 
         public override string ToString() {
             return $"{LengthInHour}, {RegistrationDeadline}, {Start}, {End}";

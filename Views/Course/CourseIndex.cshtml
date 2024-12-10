@@ -1,12 +1,7 @@
-﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
-@{
+﻿@{
     ViewData["Title"] = "Felvett kurzusok";
 }
 
-@if (SignInManager.IsSignedIn(User))
-{
 <section class="maintext">
     <h1>Jelentkezz az alábbi kurzusok közül:</h1>
 </section>
@@ -41,10 +36,3 @@
         </ul>
 </div>
 </section>
-}
-else
-{
-    <section class="maintext">
-        <h1>A kurzusok megtekintéséhez jelentkezz be!</h1>
-    </section>
-}

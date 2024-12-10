@@ -51,5 +51,6 @@ namespace Tanfolyam.Models.Data.Classes
             _courseContext.Teachers.Remove(result);
             await _courseContext.SaveChangesAsync();
         }
+
     }
 }

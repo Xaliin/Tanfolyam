@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity;
+@using Tanfolyam.Models.Data.Classes
+@inject SignInManager<User> SignInManager
+@inject RoleManager<IdentityRole> RoleManager
+@inject UserManager<User> UserManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -25,21 +31,35 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="Course" asp-controller="Course" asp-action="Index">Kurzusaim</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Admin" asp-controller="Admin" asp-action="Index">Admin</a>
-                        </li>
+                        @if(User is not null && SignInManager.IsSignedIn(User))
+                        {
+                            @if (await UserManager.IsInRoleAsync(await UserManager.GetUserAsync(User), "Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="Admin" asp-controller="Admin" asp-action="Index">Admin</a>
+                                </li>
+                            }
+                        }
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
             </div>
         </nav>
     </header>
+@if (SignInManager.IsSignedIn(User))
+{
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
-
+}
+else
+{
+    <section class="maintext">
+        <h1>A kurzusok megtekintéséhez jelentkezz be!</h1>
+    </section>
+}
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2024 - Tanfolyam - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>

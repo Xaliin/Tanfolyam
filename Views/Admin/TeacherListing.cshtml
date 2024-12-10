@@ -7,8 +7,18 @@
 <h1>TeacherListing</h1>
 
 <p>
-    <a asp-area="Admin" asp-controller="Admin" asp-action="OpenAddTeacherView">Create New</a>
+    <a asp-area="Admin" asp-controller="Admin" asp-action="OpenAddTeacherView">Új oktató felvétele</a>
 </p>
+@foreach (var item in Model)
+{
+    <ul class="bg-bubble">
+        <li class="li-bg">
+            <span class="listitem">@Html.DisplayFor(modelItem => item.Name)</span>
+            <a asp-area="Admin" asp-controller="Admin" asp-action="OpenTeacherEditView" asp-route-id="@item.Id">Módosítás</a> |
+            <a asp-action="DeleteTeacher" asp-route-id="@item.Id">Törlés</a>
+        </li>
+    </ul>
+}
 <table class="table">
     <thead>
         <tr>

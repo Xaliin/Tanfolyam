@@ -281,9 +281,6 @@ namespace Tanfolyam.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("HeadcountId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Maximum")
                         .HasColumnType("int");
 
@@ -291,8 +288,6 @@ namespace Tanfolyam.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("HeadcountId");
 
                     b.ToTable("Headcount");
                 });
@@ -339,7 +334,7 @@ namespace Tanfolyam.Migrations
                     b.ToTable("Teachers");
                 });
 
-            modelBuilder.Entity("Tanfolyam.Models.Data.Classes.Student", b =>
+            modelBuilder.Entity("Tanfolyam.Models.Data.Classes.User", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
@@ -351,7 +346,7 @@ namespace Tanfolyam.Migrations
 
                     b.HasIndex("HeadcountId");
 
-                    b.HasDiscriminator().HasValue("Student");
+                    b.HasDiscriminator().HasValue("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -419,7 +414,7 @@ namespace Tanfolyam.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Tanfolyam.Models.Data.Classes.Student", null)
+                    b.HasOne("Tanfolyam.Models.Data.Classes.User", null)
                         .WithMany("Courses")
                         .HasForeignKey("StudentId");
 
@@ -428,18 +423,7 @@ namespace Tanfolyam.Migrations
                     b.Navigation("Schedule");
                 });
 
-            modelBuilder.Entity("Tanfolyam.Models.Data.Classes.Headcount", b =>
-                {
-                    b.HasOne("Tanfolyam.Models.Data.Classes.Course", "Course")
-                        .WithMany()
-                        .HasForeignKey("HeadcountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Course");
-                });
-
-            modelBuilder.Entity("Tanfolyam.Models.Data.Classes.Student", b =>
+            modelBuilder.Entity("Tanfolyam.Models.Data.Classes.User", b =>
                 {
                     b.HasOne("Tanfolyam.Models.Data.Classes.Headcount", null)
                         .WithMany("Students")
@@ -451,7 +435,7 @@ namespace Tanfolyam.Migrations
                     b.Navigation("Students");
                 });
 
-            modelBuilder.Entity("Tanfolyam.Models.Data.Classes.Student", b =>
+            modelBuilder.Entity("Tanfolyam.Models.Data.Classes.User", b =>
                 {
                     b.Navigation("Courses");
                 });

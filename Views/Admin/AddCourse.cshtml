@@ -18,7 +18,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Teacher" class="control-label form-label">Kijelölt oktató</label>
-                <select asp-for="Teacher" class="form-control form-input"></select>
+                <select asp-for="Teacher" class="form-control form-input" asp-items="ViewBag.Teachers"></select>
                 <span asp-validation-for="Teacher" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -28,15 +28,24 @@
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label form-label">Kurzus témája</label>
-                <input asp-for="Description" class="form-control form-input admininput-desc" maxlength="50" />
+                <textarea asp-for="Description" class="form-control form-input admininput-desc" maxlength="50"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Price" class="control-label form-label">Ár (Ft)</label>
-                <input asp-for="Price" class="form-control form-input" />
+                <input type="number" asp-for="Price" class="form-control form-input" />
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
-            lengthinhour, deadline
+            <div class="form-group">
+                <label asp-for="Schedule.LengthInHour" class="control-label form-label">Kurzus időtartama (óra)</label>
+                <input type="number" asp-for="Schedule.LengthInHour" class="form-control form-input" />
+                <span asp-validation-for="Schedule.LengthInHour" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Schedule.RegistrationDeadline" class="control-label form-label">Regisztráció határideje</label>
+                <input type="datetime-local" asp-for="Schedule.RegistrationDeadline" class="form-control form-input" min="@DateTime.Now />
+                <span asp-validation-for="Schedule.RegistrationDeadline" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary form-btn" />
             </div>

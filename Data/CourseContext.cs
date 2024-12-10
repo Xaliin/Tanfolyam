@@ -8,7 +8,7 @@ namespace Tanfolyam.Data
     {
         public DbSet<Course> Courses { get; set; }
         public DbSet<Headcount> Headcount { get; set; }
-        public DbSet<Student> Students { get; set; }
+        public DbSet<User> Students { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<Schedule> Schedule { get; set; }
 
@@ -31,16 +31,11 @@ namespace Tanfolyam.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Headcount>()
-                .HasOne(l => (Course)l.Course)
-                .WithMany()
-                .HasForeignKey("HeadcountId");
-
-            modelBuilder.Entity<Headcount>()
-                .HasMany(l => (ICollection<Student>)l.Students)
+                .HasMany(l => (ICollection<User>)l.Students)
                 .WithOne()
                 .HasForeignKey("HeadcountId");
 
-            modelBuilder.Entity<Student>()
+            modelBuilder.Entity<User>()
                 .HasMany(s => (ICollection<Course>)s.Courses)
                 .WithOne()
                 .HasForeignKey("StudentId");
