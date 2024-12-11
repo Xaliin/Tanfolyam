@@ -1,7 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using Tanfolyam.Models.Data.Classes
 @using Tanfolyam.Models.Data.Interfaces
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
 @model IEnumerable<ICourse>
 
 @if (SignInManager.IsSignedIn(User))

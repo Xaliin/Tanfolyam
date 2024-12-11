@@ -12,7 +12,7 @@ using Tanfolyam.Data;
 namespace Tanfolyam.Migrations
 {
     [DbContext(typeof(CourseContext))]
-    [Migration("20241210231556_Initial")]
+    [Migration("20241210235458_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
