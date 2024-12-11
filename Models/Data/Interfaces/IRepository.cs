@@ -17,5 +17,8 @@ namespace Tanfolyam.Models.Data.Interfaces
         public Task DeleteTeacher(int id);
         public Task UpdateCourse(int id, string name, int teacherId, string type, string description, double price, double lengthInHour, DateTime deadline);
         public Task DeleteCourse(int id);
+        public Task<IEnumerable<Course>> GetUserCourses(string id);
+        public Task AddUserToHeadCount(int headcountId, string userId);
+        public Task RemoveUserFromHeadCount(int headcountId, string userId);
     }
 }

@@ -15,7 +15,7 @@
             <input type="text" class="filter" placeholder="Keresés oktató nevére...">
         </div>
         <div class="balance">
-            <p>Még ennyit tudsz elkölteni: @ViewBag.UserBudget Ft</p>
+            <p>Hátralevő egyenleged: @ViewBag.UserBudget Ft</p>
         </div>
     </section>
     <section>
@@ -23,10 +23,13 @@
             <ul class="bg-bubble">
                 @foreach (var course in Model)
                 {
-                    <li class="li-bg">
-                        <span class="listitem">@course.Name | @course.Type | @course.Teacher.Name | @course.Headcount / @course.Headcount.Maximum | @course.Description | @course.Price | @course.Schedule.ToString() | @course.Status</span>
-                        <span><button class="li-btn">Felvesz</button></span>
-                    </li>
+                    <form asp-action="AddToMyCourse" asp-controller="Course" asp-area="Course">
+                        <input type="hidden" name="courseId" asp-for="@course.Id" />
+                        <li class="li-bg">
+                            <span class="listitem">@course.Name | @course.Type | @course.Teacher.Name | @course.Headcount / @course.Headcount.Maximum | @course.Description | @course.Price | @course.Schedule.ToString() | @course.Status</span>
+                            <span><button type="submit" class="li-btn">Felvesz</button></span>
+                        </li>
+                    </form>
                 }
             </ul>
         </div>

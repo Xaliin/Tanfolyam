@@ -9,5 +9,10 @@ namespace Tanfolyam.Models.Data.Classes
     {
         public ICollection<Course> Courses { get; set; }
         public double Budget { get; set; }
+
+        public User()
+        {
+            Courses = new List<Course>();
+        }
     }
 }

@@ -20,7 +20,7 @@ namespace Tanfolyam.Models.Data.Classes
 
         public Teacher()
         {
-            
+            Courses = new List<Course>();
         }
     }
 }

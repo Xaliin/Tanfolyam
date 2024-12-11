@@ -60,9 +60,9 @@ namespace Tanfolyam.Models.Data.Classes
             await _courseContext.SaveChangesAsync();
         }
 
-        public async Task<Course> GetCourseById(int id)
+        public async Task<Course> GetCourseById(int courseId)
         {
-            return await _courseContext.Courses.Include(c => c.Headcount).ThenInclude(h => h.Students).Include(c => c.Schedule).Include(c => c.Teacher).FirstOrDefaultAsync(c => c.Id == id);
+            return await _courseContext.Courses.Include(c => c.Headcount).ThenInclude(h => h.Students).Include(c => c.Schedule).Include(c => c.Teacher).FirstOrDefaultAsync(c => c.Id == courseId);
         }
 
         public async Task UpdateCourse(int id, string name, int teacherId, string type, string description, double price, double lengthInHour, DateTime deadline)
@@ -106,6 +106,29 @@ namespace Tanfolyam.Models.Data.Classes
         public async Task<User> GetUserById(string id)
         {
             return await _userManager.FindByIdAsync(id);
+        }
+
+        public async Task<IEnumerable<Course>> GetUserCourses(string userId)
+        {
+            var user = await _userManager.Users.Include(u => u.Courses).ThenInclude(c => c.Headcount).Include(u => u.Courses).ThenInclude(c => c.Schedule).FirstOrDefaultAsync(u => u.Id == userId);
+            var usercourses = user.Courses;
+            return usercourses;
+        }
+
+        public async Task AddUserToHeadCount(int headcountId, string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            var headcount = await _courseContext.Headcount.Where(x => x.Id == headcountId).Include(h => h.Students).FirstOrDefaultAsync();
+            headcount.Students.Add(user);
+            await _courseContext.SaveChangesAsync();
+        }
+
+        public async Task RemoveUserFromHeadCount(int headcountId, string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            var headcount = await _courseContext.Headcount.Where(x => x.Id == headcountId).FirstOrDefaultAsync();
+            headcount.Students.Remove(user);
+            await _courseContext.SaveChangesAsync();
         }
     }
 }

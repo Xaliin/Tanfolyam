@@ -15,19 +15,21 @@
             <input type="text" class="filter" placeholder="Keresés oktató nevére...">
         </div>
         <div class="balance">
-            <p>Idei kezdőegyenleg: 130.000 Ft</p>
-            <p>Még ennyit tudsz elkölteni: 25.000 Ft</p>
+            <p>Hátralevő egyenleged: @ViewBag.UserBudget Ft</p>
         </div>
     </section>
     <section>
         <div>
             <ul class="bg-bubble">
-                @foreach (var course in Model)
+                @if (Model is not null)
                 {
-                    <li class="li-bg">
-                        <span class="listitem">@course.Name | @course.Type | @course.Teacher | @course.Headcount / @course.Headcount.Maximum | @course.Description | @course.Price | @course.Schedule.ToString() | @course.Status</span>
-                        <span><button class="li-btn">Visszavonás</button></span>
-                    </li>
+                    @foreach (var course in Model)
+                    {
+                        <li class="li-bg">
+                            <span class="listitem">@course.Name | @course.Type | @course.Teacher | @course.Headcount / @course.Headcount.Maximum | @course.Description | @course.Price | @course.Schedule.ToString() | @course.Status</span>
+                            <span><button class="li-btn">Visszavonás</button></span>
+                        </li>
+                    }
                 }
             </ul>
         </div>

@@ -23,43 +23,10 @@ namespace Tanfolyam.Data
             modelBuilder.Entity<Course>()
                .HasOne(c => c.Teacher)
                .WithMany(t => t.Courses)
-               .HasForeignKey(c => c.TeacherId) // Use TeacherId as the FK
+               .HasForeignKey(c => c.TeacherId) 
                .OnDelete(DeleteBehavior.Restrict);
 
-            
 
-            /*
-            modelBuilder.Entity<Course>()
-                .HasOne(c => (Headcount)c.Headcount)
-                .WithMany()
-                .HasForeignKey("CourseId")
-                .OnDelete(DeleteBehavior.Restrict);
-            
-            modelBuilder.Entity<Course>()
-                .HasOne(c => (Teacher)c.Teacher)
-                .WithMany(t => (IEnumerable<Course>)t.Courses)
-                .HasForeignKey("CourseId");
-
-            modelBuilder.Entity<Course>()
-                .HasOne(c => (Schedule)c.Schedule)
-                .WithMany()
-                .HasForeignKey("CourseId");
-
-            modelBuilder.Entity<Headcount>()
-                .HasMany(l => (ICollection<User>)l.Students)
-                .WithOne()
-                .HasForeignKey("HeadcountId");
-
-            modelBuilder.Entity<User>()
-                .HasMany(s => (ICollection<Course>)s.Courses)
-                .WithOne()
-                .HasForeignKey("UserId");
-
-            modelBuilder.Entity<Teacher>()
-                .HasMany(t => (ICollection<Course>)t.Courses)
-                .WithOne()
-                .HasForeignKey("TeacherId");
-            */
         }
     }
 }
