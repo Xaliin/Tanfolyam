@@ -1,6 +1,7 @@
-﻿@using Tanfolyam.Models.Data.Interfaces
-@model IEnumerable<ICourse>
+﻿@using Tanfolyam.Models.Data.Classes
+@using Tanfolyam.Models.Data.Interfaces
+@model IEnumerable<Course>
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Kezdőoldal";
 }
     <partial name="_CourseListingPartial" model="@Model" />

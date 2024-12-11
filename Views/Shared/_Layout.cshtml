@@ -20,7 +20,7 @@
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="Home" asp-controller="Home" asp-action="Index">Tanfolyam</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
@@ -33,7 +33,8 @@
                         </li>
                         @if(User is not null && SignInManager.IsSignedIn(User))
                         {
-                            @if (await UserManager.IsInRoleAsync(await UserManager.GetUserAsync(User), "Admin"))
+                            var currentUser = await UserManager.GetUserAsync(User);
+                            @if (currentUser is not null && await UserManager.IsInRoleAsync(currentUser, "Admin"))
                             {
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="Admin" asp-controller="Admin" asp-action="Index">Admin</a>
@@ -51,7 +52,6 @@
             @RenderBody()
         </main>
     </div>
-
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2024 - Tanfolyam - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>

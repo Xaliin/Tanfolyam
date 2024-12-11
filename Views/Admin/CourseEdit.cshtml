@@ -1,16 +1,18 @@
 ﻿@model Tanfolyam.Models.Data.Classes.Course
 
 @{
-    ViewData["Title"] = "AddCourse";
+    ViewData["Title"] = "CourseEdit";
 }
 
-<h1>Tanfolyam hozzáadása</h1>
+<h1>CourseEdit</h1>
 
+<h4>Course</h4>
 <hr />
-<div>
-    <div class="form-bg">
-        <form asp-action="AddCourse">
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CourseEdit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="Name" class="control-label form-label">Megnevezés</label>
                 <input asp-for="Name" class="form-control form-input maxlength="30" />
@@ -18,7 +20,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Teacher" class="control-label form-label">Kijelölt oktató</label>
-                <select asp-for="Teacher" class="form-control form-input" asp-items="ViewBag.Teachers"></select>
+                <select asp-for="Teacher" name="teacherId" class="form-control form-input" asp-items="ViewBag.Teachers"></select>
                 <span asp-validation-for="Teacher" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -38,23 +40,23 @@
             </div>
             <div class="form-group">
                 <label asp-for="Schedule.LengthInHour" class="control-label form-label">Kurzus időtartama (óra)</label>
-                <input type="number" asp-for="Schedule.LengthInHour" name="lengthInHour"class="form-control form-input" />
+                <input type="number" name="lengthInHour" asp-for="Schedule.LengthInHour" class="form-control form-input" />
                 <span asp-validation-for="Schedule.LengthInHour" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Schedule.RegistrationDeadline" class="control-label form-label">Regisztráció határideje</label>
-                <input type="datetime-local" asp-for="Schedule.RegistrationDeadline" name="deadline" class="form-control form-input" min="@DateTime.Now  />
+                <input type="datetime-local" name="deadline" asp-for="Schedule.RegistrationDeadline" class="form-control form-input" min="@DateTime.Now  />
                 <span asp-validation-for="Schedule.RegistrationDeadline" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary form-btn" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-area="Admin" asp-controller="Admin" asp-action="CourseListing">Back to List</a>
+    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

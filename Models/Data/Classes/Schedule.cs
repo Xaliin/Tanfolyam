@@ -2,7 +2,7 @@
 
 namespace Tanfolyam.Models.Data.Classes
 {
-    public class Schedule : ISchedule
+    public class Schedule
     {
         public int Id { get; set; }
         public double LengthInHour { get; set; }

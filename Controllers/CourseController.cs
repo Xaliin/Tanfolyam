@@ -16,7 +16,8 @@ namespace Tanfolyam.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View("CourseIndex");
+            var courses = await _repository.GetAllCourses();
+            return View("CourseIndex", courses);
         }
     }
 }

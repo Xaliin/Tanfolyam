@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Tanfolyam.Models.Data.Classes
 {
-    public class User : IdentityUser, IUser
+    public class User : IdentityUser
     {
-        public ICollection<ICourse> Courses { get; set; }
+        public ICollection<Course> Courses { get; set; }
         public double Budget { get; set; }
     }
 }

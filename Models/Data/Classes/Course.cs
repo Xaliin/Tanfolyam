@@ -7,26 +7,29 @@ using Tanfolyam.Models.Data.Interfaces;
 
 namespace Tanfolyam.Models.Data.Classes
 {
-    public class Course : ICourse
+    public class Course
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string Name { get; set; }
         public CourseType Type { get; set; }
-        public ITeacher Teacher { get; }
-        public IHeadcount Headcount { get; set; }
+        public int? TeacherId { get; set; }
+        [ForeignKey("TeacherId")]
+        public virtual Teacher? Teacher { get; set; }
+        public Headcount Headcount { get; set; }
         public string Description { get; set; }
         public double Price { get; set; }
-        public ISchedule Schedule { get; set; }
+        public Schedule Schedule { get; set; }
         public Status Status { get; set; }
 
-        public Course(string name, CourseType type, ITeacher teacher, string description, double price, ISchedule schedule)
+        public Course(string name, CourseType type, Teacher teacher, string description, double price, Schedule schedule)
         {
             Headcount headcount = new();
 
             this.Name = name;
             this.Type = type;
+            this.TeacherId = teacher.Id;
             this.Teacher = teacher;
             this.Headcount = headcount;
             this.Description = description;

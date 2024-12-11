@@ -12,8 +12,8 @@ using Tanfolyam.Data;
 namespace Tanfolyam.Migrations
 {
     [DbContext(typeof(CourseContext))]
-    [Migration("20241210235458_Initial")]
-    partial class Initial
+    [Migration("20241211170642_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -244,12 +244,12 @@ namespace Tanfolyam.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CourseId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("HeadcountId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -258,20 +258,30 @@ namespace Tanfolyam.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
+                    b.Property<int>("ScheduleId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<string>("StudentId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int?>("TeacherId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("CourseId");
+                    b.HasIndex("HeadcountId");
 
-                    b.HasIndex("StudentId");
+                    b.HasIndex("ScheduleId");
+
+                    b.HasIndex("TeacherId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Courses");
                 });
@@ -407,23 +417,30 @@ namespace Tanfolyam.Migrations
                 {
                     b.HasOne("Tanfolyam.Models.Data.Classes.Headcount", "Headcount")
                         .WithMany()
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasForeignKey("HeadcountId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Tanfolyam.Models.Data.Classes.Schedule", "Schedule")
                         .WithMany()
-                        .HasForeignKey("CourseId")
+                        .HasForeignKey("ScheduleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Tanfolyam.Models.Data.Classes.Teacher", "Teacher")
+                        .WithMany("Courses")
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("Tanfolyam.Models.Data.Classes.User", null)
                         .WithMany("Courses")
-                        .HasForeignKey("StudentId");
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Headcount");
 
                     b.Navigation("Schedule");
+
+                    b.Navigation("Teacher");
                 });
 
             modelBuilder.Entity("Tanfolyam.Models.Data.Classes.User", b =>
@@ -436,6 +453,11 @@ namespace Tanfolyam.Migrations
             modelBuilder.Entity("Tanfolyam.Models.Data.Classes.Headcount", b =>
                 {
                     b.Navigation("Students");
+                });
+
+            modelBuilder.Entity("Tanfolyam.Models.Data.Classes.Teacher", b =>
+                {
+                    b.Navigation("Courses");
                 });
 
             modelBuilder.Entity("Tanfolyam.Models.Data.Classes.User", b =>

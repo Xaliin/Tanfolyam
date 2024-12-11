@@ -8,8 +8,10 @@
 <section class="adminsection">
     <div>
         <h3>Egyenleg módosítása</h3>
-        + <input type="number" class="admininput" placeholder="..." /> Ft <select class="admininput" placeholder="..." ></select>
-        <button type="submit" class="save-btn">Mentés</button>
+        <form asp-action="AddBudget">
+            + <input type="number" name="budget" class="admininput" placeholder="..." /> Ft <select class="admininput" name="userId" asp-controller="Admin" asp-items="ViewBag.Users"></select> számára
+            <button type="submit" class="save-btn">Mentés</button>
+        </form>
     </div>
 </section>
 <section class="adminsection">

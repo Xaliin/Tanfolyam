@@ -4,18 +4,18 @@ using Tanfolyam.Models.Data.Interfaces;
 
 namespace Tanfolyam.Models.Data.Classes
 {
-    public class Teacher : ITeacher
+    public class Teacher
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string Name { get; set; }
-        public ICollection<ICourse> Courses { get; }
+        public ICollection<Course>? Courses { get; set; }
 
         public Teacher(string name)
         {
             this.Name = name;
-            Courses = new List<ICourse>();
+            Courses = new List<Course>();
         }
 
         public Teacher()

@@ -23,6 +23,12 @@ namespace Tanfolyam.Controllers
         }
         public async Task<IActionResult> Index()
         {
+            var users = await _repository.GetAllUsers();
+            ViewBag.Users = users.Select(u => new SelectListItem
+            {
+                Value = u.Id.ToString(),
+                Text = u.UserName
+            }).ToList();
             return View("AdminIndex");
         }
 
@@ -91,17 +97,55 @@ namespace Tanfolyam.Controllers
             return View("AddCourse", course);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AddCourse(string name, int teacherId, string type, string description, double price, double lengthInHour, DateTime deadline)
+        public async Task<IActionResult> OpenCourseEditView(int id)
         {
-            var teacher = await _repository.GetTeacherById(teacherId);
+            var course = await _repository.GetCourseById(id);
+            var teachers = await _repository.GetAllTeachers();
+            var types = Enum.GetValues(typeof(CourseType))
+                          .Cast<CourseType>()
+                          .Select(e => new SelectListItem
+                          {
+                              Value = e.ToString(),
+                              Text = e.ToString()
+                          }).ToList();
+            ViewBag.courseTypes = types;
+            ViewBag.Teachers = teachers.Select(t => new SelectListItem
+            {
+                Value = t.Id.ToString(),
+                Text = t.Name
+            }).ToList();
+            return View("CourseEdit", course);
+        }
+        public async Task<IActionResult> CourseEdit(int id, string name, int teacherId, string type, string description, double price, double lengthInHour, DateTime deadline)
+        {
+            await _repository.UpdateCourse(id, name, teacherId, type, description, price, lengthInHour, deadline);
+            return RedirectToAction("CourseListing");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddCourse(string name, int teacher, string type, string description, double price, double lengthInHour, DateTime deadline)
+        {
+            var rteacher = await _repository.GetTeacherById(teacher);
             var schedule = new Schedule(lengthInHour, deadline);
             var courseType = (CourseType)Enum.Parse(typeof(CourseType), type);
 
-            var course = new Course(name, courseType, teacher, description, price, schedule);
+            var course = new Course(name, courseType, rteacher, description, price, schedule);
             
             await _repository.AddCourse(course);
             return RedirectToAction("CourseListing");
+        }
+
+        public async Task<IActionResult> DeleteCourse(int id)
+        {
+            await _repository.DeleteCourse(id);
+            return RedirectToAction("CourseListing");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddBudget(double budget, string userId)
+        {
+            await _repository.AddBudget(budget, userId);
+            return RedirectToAction("Index");
         }
     }
 }
