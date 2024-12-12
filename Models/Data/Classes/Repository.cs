@@ -80,6 +80,12 @@ namespace Tanfolyam.Models.Data.Classes
             return await _userManager.FindByIdAsync(id);
         }
 
+        public async Task<Enrollment> GetEnrollmentByUserAndCourse(string userId, int coruseId)
+        {
+            var enrollments = await GetAllEnrollments();
+            return enrollments.Where(x => x.UserId == userId && x.CourseId == coruseId).FirstOrDefault();
+        }
+
         public async Task UpdateTeacher(int id, string name)
         {
             var result = _courseContext.Teachers.Where(x => x.Id == id).FirstOrDefault();
@@ -93,6 +99,12 @@ namespace Tanfolyam.Models.Data.Classes
         public async Task UpdateCourse(Course course)
         {
             _courseContext.Courses.Update(course);
+            await _courseContext.SaveChangesAsync();
+        }
+
+        public async Task UpdateSchedule(Schedule schedule)
+        {
+            _courseContext.Schedule.Update(schedule);
             await _courseContext.SaveChangesAsync();
         }
 

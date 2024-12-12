@@ -1,4 +1,7 @@
-﻿@model IEnumerable<Tanfolyam.Models.Data.Classes.Course>
+﻿@using Tanfolyam.Models.Data.Classes
+@using Tanfolyam.Models.Data.DTO
+@using Tanfolyam.Models.Data.Enums
+@model IEnumerable<DtoCourseWrapper>
 
 @{
     ViewData["Title"] = "CourseListing";
@@ -13,19 +16,19 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                @Html.DisplayNameFor(model => model.Course.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Teacher)
+                @Html.DisplayNameFor(model => model.Course.Teacher)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Type)
+                @Html.DisplayNameFor(model => model.Course.Type)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                @Html.DisplayNameFor(model => model.Course.Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Price)
+                @Html.DisplayNameFor(model => model.Course.Price)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Schedule.RegistrationDeadline)
@@ -34,7 +37,10 @@
                 @Html.DisplayNameFor(model => model.Schedule.LengthInHour)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Status)
+                @Html.DisplayNameFor(model => model.Course.StudentCount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Course.Status)
             </th>
             <th></th>
         </tr>
@@ -43,19 +49,19 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @Html.DisplayFor(modelItem => item.Course.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Teacher.Name)
+                    @Html.DisplayFor(modelItem => item.Course.Teacher.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Type)
+                    @Html.DisplayFor(modelItem => item.Course.Type)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Description)
+                    @Html.DisplayFor(modelItem => item.Course.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Price)
+                    @Html.DisplayFor(modelItem => item.Course.Price)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Schedule.RegistrationDeadline)
@@ -64,11 +70,41 @@
                 @Html.DisplayFor(modelItem => item.Schedule.LengthInHour)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Status)
+                    @Html.DisplayFor(model => item.Course.StudentCount) / @TanfolyamConstants.HeadcountMaximum
             </td>
             <td>
-                <a asp-controller="Admin" asp-action="OpenCourseEditView" asp-route-id="@item.Id">Módosítás</a> |
-                    <a asp-action="DeleteCourse" asp-controller="Admin" asp-route-id="@item.Id">Törlés</a>
+                    @Html.DisplayFor(modelItem => item.Course.Status)
+            </td>
+            <td>
+                    @if (item.Course.Status == Status.Inactive)
+                    {
+                        <form asp-controller="Admin" asp-action="OpenActivateCourse">
+                            <input type="hidden" name="courseId" asp-for="@item.Course.Id" />
+                            @if (item.IsLaunchable)
+                            {
+                                <input type="submit" value="Aktiválás" class="btn btn-primary" />
+                            }
+                            else
+                            {
+                                <input type="submit" value="Aktiválás" class="btn btn-primary" disabled/>
+                            }
+                        </form>
+                    }
+                    else
+                    {
+                        <form asp-controller="Admin" asp-action="DeactivateCourse">
+                            <input type="hidden" name="courseId" asp-for="@item.Course.Id" />
+                            <input type="submit" value="Deaktiválás" class="btn btn-primary" />
+                        </form>
+                    }
+                    <form asp-controller="Admin" asp-action="OpenCourseEditView">
+                        <input type="hidden" name="courseId" asp-for="@item.Course.Id" />
+                        <input type="submit" value="Módosítás" class="btn btn-primary" />
+                    </form>
+                    <form asp-controller="Admin" asp-action="DeleteCourse">
+                        <input type="hidden" name="courseId" asp-for="@item.Course.Id" />
+                        <input type="submit" value="Törlés" class="btn btn-primary" />
+                    </form>
             </td>
         </tr>
 }

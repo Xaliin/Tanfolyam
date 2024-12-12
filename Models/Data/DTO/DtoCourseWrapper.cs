@@ -36,6 +36,16 @@ namespace Tanfolyam.Models.Data.DTO
 
         private bool DetermineIfEnrollButtonShouldBeDisabled()
         {
+            if (Course.Schedule.RegistrationDeadline < DateTime.Now)
+            {
+                return true;
+            }
+
+            if (Course.Status == Status.Active)
+            {
+                return true;
+            }
+
             if (IsCurrentUserEnrolled)
             {
                 return false;

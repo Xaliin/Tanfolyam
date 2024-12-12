@@ -8,5 +8,7 @@ namespace Tanfolyam.Helpers.Interfaces
         public Task<IEnumerable<DtoCourseWrapper>> BuildPresentationDataForCurrentUser(User user);
 
         public Task<IEnumerable<DtoCourseWrapper>> BuildPresentationData(User user);
+
+        public IDictionary<string, int> GetChartDataForAmoutOfStudentsPerTeacher(IEnumerable<Course> courses);
     }
 }

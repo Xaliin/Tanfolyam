@@ -33,6 +33,21 @@ namespace Tanfolyam.Helpers.Classes
             return await BuildData(user, courses);
         }
 
+        public IDictionary<string, int> GetChartDataForAmoutOfStudentsPerTeacher(IEnumerable<Course> courses)
+        {
+            IDictionary<string, int> dict = new Dictionary<string, int>();
+            foreach (var course in courses)
+            {
+                if (dict.ContainsKey(course.Teacher.Name))
+                {
+                    dict[course.Teacher.Name] += course.StudentCount;
+                }
+                else dict.Add(course.Teacher.Name, course.StudentCount);
+            }
+
+            return dict;
+        }
+
         private async Task<IEnumerable<DtoCourseWrapper>> BuildData(User user, IEnumerable<Course> courses)
         {
             var dtoCourses = new List<DtoCourseWrapper>();

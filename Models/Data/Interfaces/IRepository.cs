@@ -15,8 +15,10 @@ namespace Tanfolyam.Models.Data.Interfaces
         public Task<Teacher> GetTeacherById(int id);
         public Task<Course> GetCourseById(int id);
         public Task<User> GetUserById(string id);
+        public Task<Enrollment> GetEnrollmentByUserAndCourse(string userId, int coruseId);
         public Task UpdateTeacher(int id, string name);
         public Task UpdateCourse(Course course);
+        public Task UpdateSchedule(Schedule schedule);
         public Task DeleteTeacher(int id);
         public Task DeleteCourse(int id);
         public Task DeleteEnrollment(string userId, int courseId);

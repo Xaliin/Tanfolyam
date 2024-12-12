@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Tanfolyam.Helpers.Interfaces;
 using Tanfolyam.Models.Data.Classes;
 using Tanfolyam.Models.Data.Enums;
 using Tanfolyam.Models.Data.Interfaces;
@@ -13,11 +15,15 @@ namespace Tanfolyam.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IRepository _repository;
+        private readonly UserManager<User> _userManager;
+        private readonly IPresentationDataProvider _presentationDataProvider;
 
-        public AdminController(ILogger<HomeController> logger, IRepository repository)
+        public AdminController(ILogger<HomeController> logger, IRepository repository, UserManager<User> userManager, IPresentationDataProvider presentationDataProvider)
         {
             _logger = logger;
             _repository = repository;
+            _userManager = userManager;
+            _presentationDataProvider = presentationDataProvider;
         }
         public async Task<IActionResult> Index()
         {
@@ -32,7 +38,8 @@ namespace Tanfolyam.Controllers
 
         public async Task<IActionResult> CourseListing()
         {
-            var courses = await _repository.GetAllCourses();
+            var user = await _userManager.GetUserAsync(User);
+            var courses = await _presentationDataProvider.BuildPresentationData(user);
             return View("CourseListing", courses);
         }
 
@@ -95,9 +102,9 @@ namespace Tanfolyam.Controllers
             return View("AddCourse", course);
         }
 
-        public async Task<IActionResult> OpenCourseEditView(int id)
+        public async Task<IActionResult> OpenCourseEditView(int courseId)
         {
-            var course = await _repository.GetCourseById(id);
+            var course = await _repository.GetCourseById(courseId);
             var teachers = await _repository.GetAllTeachers();
             var types = Enum.GetValues(typeof(CourseType))
                           .Cast<CourseType>()
@@ -143,9 +150,9 @@ namespace Tanfolyam.Controllers
             return RedirectToAction("CourseListing");
         }
 
-        public async Task<IActionResult> DeleteCourse(int id)
+        public async Task<IActionResult> DeleteCourse(int courseId)
         {
-            await _repository.DeleteCourse(id);
+            await _repository.DeleteCourse(courseId);
             return RedirectToAction("CourseListing");
         }
 
@@ -154,6 +161,64 @@ namespace Tanfolyam.Controllers
         {
             await _repository.AddBudget(budget, userId);
             return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> OpenActivateCourse(int courseId)
+        {
+            var course = await _repository.GetCourseById(courseId);
+            var schedule = course.Schedule;
+            ViewBag.CourseId = courseId;
+            return View("ActivateCourse", schedule);
+        }
+
+        public async Task<IActionResult> ActivateCourse(int courseId, int scheduleId, DateTime start, DateTime end)
+        {
+            var course = await _repository.GetCourseById(courseId);
+            course.Status = Status.Active;
+            await _repository.UpdateCourse(course);
+            var schedule = course.Schedule;
+            schedule.Start = start;
+            schedule.End = end;
+            await _repository.UpdateSchedule(schedule);
+
+            return RedirectToAction("CourseListing");
+        }
+
+        public async Task<IActionResult> DeactivateCourse(int courseId)
+        {
+            var course = await _repository.GetCourseById(courseId);
+            course.Status = Status.Inactive;
+            await _repository.UpdateCourse(course);
+            var schedule = course.Schedule;
+            schedule.Start = null;
+            schedule.End = null;
+            await _repository.UpdateSchedule(schedule);
+
+            return RedirectToAction("CourseListing");
+        }
+
+        public async Task<IActionResult> GetChartDataForAmoutOfStudentsPerTeacher(DateTime startDate, DateTime endDate)
+        {
+            var courses = await _repository.GetAllCourses();
+            courses = FilterCouresByDate(courses, startDate, endDate);
+            var data = _presentationDataProvider.GetChartDataForAmoutOfStudentsPerTeacher(courses);
+
+            return Json(data);
+        }
+
+        private IEnumerable<Course> FilterCouresByDate(IEnumerable<Course> courses, DateTime start, DateTime end)
+        {
+            var filteredList = new List<Course>();
+            foreach (var course in courses)
+            {
+                if (course.Schedule.Start is not null && course.Schedule.Start >= start &&
+                    course.Schedule.Start <= end)
+                {
+                    filteredList.Add(course);
+                }
+            }
+
+            return filteredList;
         }
     }
 }

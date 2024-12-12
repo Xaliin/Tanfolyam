@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TanfolyamXml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Courses>
+    <CourseXml>
+      <Id>1</Id>
+      <Name>Tanjolyam1</Name>
+      <Type>Online</Type>
+      <Description>asd</Description>
+      <Teacher>Tanár1</Teacher>
+      <StudentCount>0</StudentCount>
+      <Status>Inactive</Status>
+      <LengthInHour>5</LengthInHour>
+      <RegistrationDeadline>2024-12-13T06:14:00</RegistrationDeadline>
+      <Start xsi:nil="true" />
+      <End xsi:nil="true" />
+    </CourseXml>
+    <CourseXml>
+      <Id>2</Id>
+      <Name>Tanfolyam2</Name>
+      <Type>Offline</Type>
+      <Description>T2</Description>
+      <Teacher>Tanár1</Teacher>
+      <StudentCount>4</StudentCount>
+      <Status>Inactive</Status>
+      <LengthInHour>2</LengthInHour>
+      <RegistrationDeadline>2024-12-18T06:20:00</RegistrationDeadline>
+      <Start xsi:nil="true" />
+      <End xsi:nil="true" />
+    </CourseXml>
+  </Courses>
+</TanfolyamXml>

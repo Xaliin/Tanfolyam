@@ -12,7 +12,7 @@ using Tanfolyam.Data;
 namespace Tanfolyam.Migrations
 {
     [DbContext(typeof(CourseContext))]
-    [Migration("20241212022200_InitialCreate")]
+    [Migration("20241212051329_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -286,6 +286,9 @@ namespace Tanfolyam.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<double>("AmountToBePayed")
+                        .HasColumnType("float");
 
                     b.Property<int>("CourseId")
                         .HasColumnType("int");

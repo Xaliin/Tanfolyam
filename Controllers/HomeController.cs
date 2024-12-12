@@ -28,10 +28,6 @@ namespace Tanfolyam.Controllers
         public async Task<IActionResult> Index()
         {
             var user = await _userManager.GetUserAsync(User);
-            if (user is not null)
-            {
-                ViewBag.UserBudget = user.Budget;
-            }
             var courses = await _dataProvider.BuildPresentationData(user);
             return View("HomeIndex", courses);
         }

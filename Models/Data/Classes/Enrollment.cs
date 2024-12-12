@@ -17,5 +17,7 @@ namespace Tanfolyam.Models.Data.Classes
 
         [ForeignKey("CourseId")]
         public Course? Course { get; set; }
+
+        public double AmountToBePayed { get; set; }
     }
 }

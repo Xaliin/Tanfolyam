@@ -284,6 +284,9 @@ namespace Tanfolyam.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<double>("AmountToBePayed")
+                        .HasColumnType("float");
+
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
 

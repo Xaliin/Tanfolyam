@@ -225,7 +225,8 @@ namespace Tanfolyam.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    CourseId = table.Column<int>(type: "int", nullable: false)
+                    CourseId = table.Column<int>(type: "int", nullable: false),
+                    AmountToBePayed = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {

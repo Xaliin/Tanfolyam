@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using Tanfolyam.Models.Data.Classes
 @using Tanfolyam.Models.Data.DTO
+@using Tanfolyam.Models.Data.Enums
 @using Tanfolyam.Models.Data.Interfaces
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
@@ -13,10 +14,16 @@
     </section>
     <section class="info">
         <div>
-            <input type="text" class="filter" placeholder="Keresés oktató nevére...">
+            <form asp-controller="Course" asp-action="ExportToXML">
+                <select name="action" class="form-control form-input">
+                    <option value="ExportAllToXML">Minden exportálása</option>
+                    <option value="ExportEnrolledCoursesToXML">Csak a felvett tanfolyamok exportálása</option>
+                </select>
+                <input type="submit" value="Exportálása XML formátumba" class="btn btn-primary" />
+            </form>
         </div>
         <div class="balance">
-            <p>Hátralevő egyenleged: @ViewBag.UserBudget Ft</p>
+            <p>Hátralevő egyenleged: @UserManager.GetUserAsync(User).Result.Budget Ft</p>
         </div>
     </section>
     <section>
@@ -27,11 +34,14 @@
                     string aspAction = "AddToMyCourse";
                     string buttonText = "Felvesz";
                     string disableButton = dtoCourse.DisableFormControll ? "disabled" : "";
-                    if (dtoCourse.IsCurrentUserEnrolled)
+                    if (dtoCourse.IsCurrentUserEnrolled )
                     {
                         aspAction = "RemoveFromMyCourse";
                         buttonText = "Lejelentkezés";
-                        disableButton = "";
+                        if (dtoCourse.Course.Status != Status.Active)
+                        {
+                            disableButton = "";
+                        }
                     }
                     <form asp-action="@aspAction" asp-controller="Course" asp-area="Course">
                         <input type="hidden" name="courseId" asp-for="@dtoCourse.Course.Id" />
