@@ -1,15 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using NuGet.Protocol.Core.Types;
-using SQLitePCL;
 using Tanfolyam.Models.Data.Classes;
 using Tanfolyam.Models.Data.Enums;
 using Tanfolyam.Models.Data.Interfaces;
 
 namespace Tanfolyam.Controllers
 {
+    [Authorize]
     [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
@@ -116,9 +114,19 @@ namespace Tanfolyam.Controllers
             }).ToList();
             return View("CourseEdit", course);
         }
-        public async Task<IActionResult> CourseEdit(int id, string name, int teacherId, string type, string description, double price, double lengthInHour, DateTime deadline)
+        public async Task<IActionResult> CourseEdit(int courseId, int studentCount, string name, int teacherId, string type, string description, double price, double lengthInHour, DateTime deadline)
         {
-            await _repository.UpdateCourse(id, name, teacherId, type, description, price, lengthInHour, deadline);
+            var teacher = await _repository.GetTeacherById(teacherId);
+            var convertedType = (CourseType)Enum.Parse(typeof(CourseType), type);
+            var schedule = new Schedule(lengthInHour, deadline);
+
+            var course = new Course(name, convertedType, teacher, description, price, schedule)
+            {
+                Id = courseId,
+                StudentCount = studentCount
+                
+            };
+            await _repository.UpdateCourse(course);
             return RedirectToAction("CourseListing");
         }
 
@@ -130,7 +138,7 @@ namespace Tanfolyam.Controllers
             var courseType = (CourseType)Enum.Parse(typeof(CourseType), type);
 
             var course = new Course(name, courseType, rteacher, description, price, schedule);
-            
+
             await _repository.AddCourse(course);
             return RedirectToAction("CourseListing");
         }

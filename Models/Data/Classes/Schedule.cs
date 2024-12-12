@@ -21,7 +21,7 @@ namespace Tanfolyam.Models.Data.Classes
         }
 
         public override string ToString() {
-            return $"{LengthInHour}, {RegistrationDeadline}, {Start}, {End}";
+            return $"{LengthInHour}, {RegistrationDeadline.ToShortDateString()}, {(Start is null ? "N/A" : Start)} - {(End is null ? "N/A" : End)}";
         }
     }
 }

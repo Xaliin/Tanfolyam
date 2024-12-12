@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Tanfolyam.Controllers;
 using Tanfolyam.Data;
+using Tanfolyam.Helpers.Classes;
+using Tanfolyam.Helpers.Interfaces;
 using Tanfolyam.Models.Data.Classes;
 using Tanfolyam.Models.Data.Interfaces;
 
@@ -25,6 +27,7 @@ namespace Tanfolyam
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddScoped<IRepository, Repository>();
+            builder.Services.AddScoped<IPresentationDataProvider, PresentationDataProvider>();
 
             var app = builder.Build();
 

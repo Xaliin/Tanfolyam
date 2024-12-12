@@ -3,8 +3,10 @@
 @inject UserManager<User> UserManager
 @using Microsoft.AspNetCore.Identity
 @using Tanfolyam.Models.Data.Classes
+@using Tanfolyam.Models.Data.DTO
+@model IEnumerable<DtoCourseWrapper>
 @{
     ViewData["Title"] = "Felvett kurzusok";
 }
 
-<partial name="_MyCoursesListingPartial" model="@Model" />
+<partial name="_CourseListingPartial" model="@Model" />

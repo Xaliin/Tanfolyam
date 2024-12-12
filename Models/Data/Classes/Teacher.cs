@@ -19,5 +19,10 @@ namespace Tanfolyam.Models.Data.Classes
         {
 
         }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

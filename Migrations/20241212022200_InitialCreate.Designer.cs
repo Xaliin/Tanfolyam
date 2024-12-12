@@ -12,7 +12,7 @@ using Tanfolyam.Data;
 namespace Tanfolyam.Migrations
 {
     [DbContext(typeof(CourseContext))]
-    [Migration("20241212001043_InitialCreate")]
+    [Migration("20241212022200_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -287,17 +287,17 @@ namespace Tanfolyam.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CourseId1")
+                    b.Property<int>("CourseId")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserId1")
+                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CourseId1");
+                    b.HasIndex("CourseId");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Enrollments");
                 });
@@ -426,11 +426,13 @@ namespace Tanfolyam.Migrations
                 {
                     b.HasOne("Tanfolyam.Models.Data.Classes.Course", "Course")
                         .WithMany()
-                        .HasForeignKey("CourseId1");
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Tanfolyam.Models.Data.Classes.User", "User")
                         .WithMany("Enrollments")
-                        .HasForeignKey("UserId1");
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Course");
 

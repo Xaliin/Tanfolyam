@@ -1,23 +1,28 @@
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Tanfolyam.Helpers.Interfaces;
 using Tanfolyam.Models;
 using Tanfolyam.Models.Data.Classes;
 using Tanfolyam.Models.Data.Interfaces;
 
 namespace Tanfolyam.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IRepository repository;
+        private readonly IRepository _repository;
         private readonly UserManager<User> _userManager;
+        private readonly IPresentationDataProvider _dataProvider;
 
-        public HomeController(ILogger<HomeController> logger, IRepository _repository, UserManager<User> userManager)
+        public HomeController(ILogger<HomeController> logger, IRepository repository, UserManager<User> userManager, IPresentationDataProvider dataProvider)
         {
-            this._logger = logger;
-            this.repository = _repository;
-            this._userManager = userManager;
+            _logger = logger;
+            _repository = repository;
+            _userManager = userManager;
+            _dataProvider = dataProvider;
         }
 
         public async Task<IActionResult> Index()
@@ -27,7 +32,7 @@ namespace Tanfolyam.Controllers
             {
                 ViewBag.UserBudget = user.Budget;
             }
-            var courses = await repository.GetAllCourses();
+            var courses = await _dataProvider.BuildPresentationData(user);
             return View("HomeIndex", courses);
         }
 

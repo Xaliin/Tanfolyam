@@ -1,9 +1,10 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using Tanfolyam.Models.Data.Classes
+@using Tanfolyam.Models.Data.DTO
 @using Tanfolyam.Models.Data.Interfaces
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
-@model IEnumerable<Course>
+@model IEnumerable<DtoCourseWrapper>
 
 @if (SignInManager.IsSignedIn(User))
 {
@@ -21,13 +22,22 @@
     <section>
         <div>
             <ul class="bg-bubble">
-                @foreach (var course in Model)
+                @foreach (var dtoCourse in Model)
                 {
-                    <form asp-action="AddToMyCourse" asp-controller="Course" asp-area="Course">
-                        <input type="hidden" name="courseId" asp-for="@course.Id" />
+                    string aspAction = "AddToMyCourse";
+                    string buttonText = "Felvesz";
+                    string disableButton = dtoCourse.DisableFormControll ? "disabled" : "";
+                    if (dtoCourse.IsCurrentUserEnrolled)
+                    {
+                        aspAction = "RemoveFromMyCourse";
+                        buttonText = "Lejelentkezés";
+                        disableButton = "";
+                    }
+                    <form asp-action="@aspAction" asp-controller="Course" asp-area="Course">
+                        <input type="hidden" name="courseId" asp-for="@dtoCourse.Course.Id" />
                         <li class="li-bg">
-                            <span class="listitem">@course.Name | @course.Type | @course.Teacher.Name | @course.Description | @course.Price | @course.Schedule.ToString() | @course.Status</span>
-                            <span><button type="submit" class="li-btn">Felvesz</button></span>
+                        <span class="listitem">@dtoCourse.ToString() | @dtoCourse.Schedule.ToString() </span>
+                            <span><button type="submit" class="li-btn" @disableButton>@buttonText</button></span>
                         </li>
                     </form>
                 }
