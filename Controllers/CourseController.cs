@@ -34,10 +34,10 @@ namespace Tanfolyam.Controllers
         {
             var user = await _userManager.GetUserAsync(User);
             var course = await _repository.GetCourseById(courseId);
-            var headcountId = course.Headcount.Id;
-            user.Courses.Add(course);
-            await _repository.AddUserToHeadCount(headcountId, user.Id);
-            await _userManager.UpdateAsync(user);
+            var enrollment = new Enrollment();
+            enrollment.Course = course;
+            enrollment.User = user;
+
             return RedirectToAction("Index");
         }
     }

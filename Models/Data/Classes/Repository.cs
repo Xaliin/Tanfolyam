@@ -25,7 +25,10 @@ namespace Tanfolyam.Models.Data.Classes
 
         public async Task<IEnumerable<Course>> GetAllCourses()
         {
-            return _courseContext.Courses.Include(c => c.Headcount).ThenInclude(h => h.Students).Include(c => c.Schedule).Include(c => c.Teacher).ToList();
+            return _courseContext.Courses
+                .Include(c => c.Teacher)
+                .Include(c => c.Schedule)
+                .ToList();
         }
 
         public async Task<IEnumerable<Teacher>> GetAllTeachers()
@@ -62,7 +65,7 @@ namespace Tanfolyam.Models.Data.Classes
 
         public async Task<Course> GetCourseById(int courseId)
         {
-            return await _courseContext.Courses.Include(c => c.Headcount).ThenInclude(h => h.Students).Include(c => c.Schedule).Include(c => c.Teacher).FirstOrDefaultAsync(c => c.Id == courseId);
+            return await _courseContext.Courses.Include(c => c.Schedule).Include(c => c.Teacher).FirstOrDefaultAsync(c => c.Id == courseId);
         }
 
         public async Task UpdateCourse(int id, string name, int teacherId, string type, string description, double price, double lengthInHour, DateTime deadline)
@@ -93,7 +96,7 @@ namespace Tanfolyam.Models.Data.Classes
 
         public async Task<IEnumerable<User>> GetAllUsers()
         {
-            return await _courseContext.Users.Include(u => u.Courses).ToListAsync();
+            return await _courseContext.Users.ToListAsync();
         }
 
         public async Task AddBudget(double budget, string userId)
@@ -110,25 +113,8 @@ namespace Tanfolyam.Models.Data.Classes
 
         public async Task<IEnumerable<Course>> GetUserCourses(string userId)
         {
-            var user = await _userManager.Users.Include(u => u.Courses).ThenInclude(c => c.Headcount).Include(u => u.Courses).ThenInclude(c => c.Schedule).FirstOrDefaultAsync(u => u.Id == userId);
-            var usercourses = user.Courses;
-            return usercourses;
+            return _courseContext.Courses.Where(x => _courseContext.Enrollments.Where(x => x.UserId == userId).Select(x => x.Id).ToList().Contains(x.Id));
         }
 
-        public async Task AddUserToHeadCount(int headcountId, string userId)
-        {
-            var user = await _userManager.FindByIdAsync(userId);
-            var headcount = await _courseContext.Headcount.Where(x => x.Id == headcountId).Include(h => h.Students).FirstOrDefaultAsync();
-            headcount.Students.Add(user);
-            await _courseContext.SaveChangesAsync();
-        }
-
-        public async Task RemoveUserFromHeadCount(int headcountId, string userId)
-        {
-            var user = await _userManager.FindByIdAsync(userId);
-            var headcount = await _courseContext.Headcount.Where(x => x.Id == headcountId).FirstOrDefaultAsync();
-            headcount.Students.Remove(user);
-            await _courseContext.SaveChangesAsync();
-        }
     }
 }

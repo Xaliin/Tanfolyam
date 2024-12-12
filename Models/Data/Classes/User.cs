@@ -1,18 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using Tanfolyam.Models.Data.Interfaces;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 
 namespace Tanfolyam.Models.Data.Classes
 {
     public class User : IdentityUser
     {
-        public ICollection<Course> Courses { get; set; }
+        public ICollection<Enrollment> Enrollments { get; set; }
         public double Budget { get; set; }
 
         public User()
         {
-            Courses = new List<Course>();
+            Enrollments = new List<Enrollment>();
         }
     }
 }

@@ -7,7 +7,7 @@ namespace Tanfolyam.Data
     public class CourseContext : IdentityDbContext
     {
         public DbSet<Course> Courses { get; set; }
-        public DbSet<Headcount> Headcount { get; set; }
+        public DbSet<Enrollment> Enrollments { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<Schedule> Schedule { get; set; }
@@ -19,13 +19,6 @@ namespace Tanfolyam.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            modelBuilder.Entity<Course>()
-               .HasOne(c => c.Teacher)
-               .WithMany(t => t.Courses)
-               .HasForeignKey(c => c.TeacherId) 
-               .OnDelete(DeleteBehavior.Restrict);
-
 
         }
     }

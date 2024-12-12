@@ -26,7 +26,7 @@
                     <form asp-action="AddToMyCourse" asp-controller="Course" asp-area="Course">
                         <input type="hidden" name="courseId" asp-for="@course.Id" />
                         <li class="li-bg">
-                            <span class="listitem">@course.Name | @course.Type | @course.Teacher.Name | @course.Headcount / @course.Headcount.Maximum | @course.Description | @course.Price | @course.Schedule.ToString() | @course.Status</span>
+                            <span class="listitem">@course.Name | @course.Type | @course.Teacher.Name | @course.Description | @course.Price | @course.Schedule.ToString() | @course.Status</span>
                             <span><button type="submit" class="li-btn">Felvesz</button></span>
                         </li>
                     </form>

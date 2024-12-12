@@ -245,9 +245,6 @@ namespace Tanfolyam.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("HeadcountId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -261,29 +258,25 @@ namespace Tanfolyam.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
+                    b.Property<int>("StudentCount")
+                        .HasColumnType("int");
+
                     b.Property<int?>("TeacherId")
                         .HasColumnType("int");
 
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("HeadcountId");
 
                     b.HasIndex("ScheduleId");
 
                     b.HasIndex("TeacherId");
 
-                    b.HasIndex("UserId");
-
                     b.ToTable("Courses");
                 });
 
-            modelBuilder.Entity("Tanfolyam.Models.Data.Classes.Headcount", b =>
+            modelBuilder.Entity("Tanfolyam.Models.Data.Classes.Enrollment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -291,15 +284,19 @@ namespace Tanfolyam.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Maximum")
+                    b.Property<int?>("CourseId1")
                         .HasColumnType("int");
 
-                    b.Property<int>("Minimum")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId1")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Headcount");
+                    b.HasIndex("CourseId1");
+
+                    b.HasIndex("UserId1");
+
+                    b.ToTable("Enrollments");
                 });
 
             modelBuilder.Entity("Tanfolyam.Models.Data.Classes.Schedule", b =>
@@ -350,11 +347,6 @@ namespace Tanfolyam.Migrations
 
                     b.Property<double>("Budget")
                         .HasColumnType("float");
-
-                    b.Property<int?>("HeadcountId")
-                        .HasColumnType("int");
-
-                    b.HasIndex("HeadcountId");
 
                     b.HasDiscriminator().HasValue("User");
                 });
@@ -412,12 +404,6 @@ namespace Tanfolyam.Migrations
 
             modelBuilder.Entity("Tanfolyam.Models.Data.Classes.Course", b =>
                 {
-                    b.HasOne("Tanfolyam.Models.Data.Classes.Headcount", "Headcount")
-                        .WithMany()
-                        .HasForeignKey("HeadcountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Tanfolyam.Models.Data.Classes.Schedule", "Schedule")
                         .WithMany()
                         .HasForeignKey("ScheduleId")
@@ -425,41 +411,32 @@ namespace Tanfolyam.Migrations
                         .IsRequired();
 
                     b.HasOne("Tanfolyam.Models.Data.Classes.Teacher", "Teacher")
-                        .WithMany("Courses")
-                        .HasForeignKey("TeacherId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Tanfolyam.Models.Data.Classes.User", null)
-                        .WithMany("Courses")
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("Headcount");
+                        .WithMany()
+                        .HasForeignKey("TeacherId");
 
                     b.Navigation("Schedule");
 
                     b.Navigation("Teacher");
                 });
 
+            modelBuilder.Entity("Tanfolyam.Models.Data.Classes.Enrollment", b =>
+                {
+                    b.HasOne("Tanfolyam.Models.Data.Classes.Course", "Course")
+                        .WithMany()
+                        .HasForeignKey("CourseId1");
+
+                    b.HasOne("Tanfolyam.Models.Data.Classes.User", "User")
+                        .WithMany("Enrollments")
+                        .HasForeignKey("UserId1");
+
+                    b.Navigation("Course");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Tanfolyam.Models.Data.Classes.User", b =>
                 {
-                    b.HasOne("Tanfolyam.Models.Data.Classes.Headcount", null)
-                        .WithMany("Students")
-                        .HasForeignKey("HeadcountId");
-                });
-
-            modelBuilder.Entity("Tanfolyam.Models.Data.Classes.Headcount", b =>
-                {
-                    b.Navigation("Students");
-                });
-
-            modelBuilder.Entity("Tanfolyam.Models.Data.Classes.Teacher", b =>
-                {
-                    b.Navigation("Courses");
-                });
-
-            modelBuilder.Entity("Tanfolyam.Models.Data.Classes.User", b =>
-                {
-                    b.Navigation("Courses");
+                    b.Navigation("Enrollments");
                 });
 #pragma warning restore 612, 618
         }
