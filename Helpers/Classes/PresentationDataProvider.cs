@@ -47,6 +47,20 @@ namespace Tanfolyam.Helpers.Classes
 
             return dict;
         }
+        public IDictionary<string, double> GetChartDataForIncomeFromEnrollments(IEnumerable<Enrollment> enrollments)
+        {
+            IDictionary<string, double> dict = new Dictionary<string, double>();
+            foreach (var enrollment in enrollments) 
+            {
+                if (dict.ContainsKey(enrollment.Course.Name))
+                {
+                    dict[enrollment.Course.Name] += enrollment.AmountToBePayed;
+                }
+                else dict.Add(enrollment.Course.Name, enrollment.AmountToBePayed);
+            }
+
+            return dict;
+        }
 
         private async Task<IEnumerable<DtoCourseWrapper>> BuildData(User user, IEnumerable<Course> courses)
         {

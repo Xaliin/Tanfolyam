@@ -131,7 +131,7 @@ namespace Tanfolyam.Controllers
             {
                 Id = courseId,
                 StudentCount = studentCount
-                
+
             };
             await _repository.UpdateCourse(course);
             return RedirectToAction("CourseListing");
@@ -206,15 +206,47 @@ namespace Tanfolyam.Controllers
             return Json(data);
         }
 
+        public async Task<IActionResult> GetChartDataForIncomeFromCourses(DateTime startDatem, DateTime endDate)
+        {
+            var enrollments = await _repository.GetAllEnrollments();
+            enrollments = FilterEnrollmentsByDate(enrollments, startDatem, endDate);
+            var data = _presentationDataProvider.GetChartDataForIncomeFromEnrollments(enrollments);
+
+            return Json(data);
+        }
+
         private IEnumerable<Course> FilterCouresByDate(IEnumerable<Course> courses, DateTime start, DateTime end)
         {
             var filteredList = new List<Course>();
             foreach (var course in courses)
             {
-                if (course.Schedule.Start is not null && course.Schedule.Start >= start &&
+                if (course.Schedule is null) { continue; }
+                if (course.Schedule.Start is null) { continue; }
+
+                if (course.Schedule.Start >= start &&
                     course.Schedule.Start <= end)
                 {
                     filteredList.Add(course);
+                }
+            }
+
+            return filteredList;
+        }
+
+        private IEnumerable<Enrollment> FilterEnrollmentsByDate(IEnumerable<Enrollment> enrollments, DateTime start, DateTime end)
+        {
+            var filteredList = new List<Enrollment>();
+
+            foreach (var enrollment in enrollments)
+            {
+                if (enrollment.Course is null) { continue; }
+                if (enrollment.Course.Schedule is null) { continue; }
+                if (enrollment.Course.Schedule.Start is null) { continue; }
+
+                if (enrollment.Course.Schedule.Start >= start &&
+                    enrollment.Course.Schedule.Start <= end)
+                {
+                    filteredList.Add(enrollment);
                 }
             }
 

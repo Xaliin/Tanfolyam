@@ -62,7 +62,7 @@ namespace Tanfolyam.Models.Data.Classes
 
         public async Task<IEnumerable<Enrollment>> GetAllEnrollments()
         {
-            return await _courseContext.Enrollments.ToListAsync();
+            return await _courseContext.Enrollments.Include(e => e.Course).ThenInclude(c => c.Schedule).ToListAsync();
         }
 
         public async Task<Teacher> GetTeacherById(int id)
