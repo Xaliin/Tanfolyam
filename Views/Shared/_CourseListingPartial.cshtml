@@ -9,9 +9,6 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    <section class="maintext">
-        <h1>Jelentkezz az alábbi kurzusok közül:</h1>
-    </section>
     <section class="info">
         <div>
             <form asp-controller="Course" asp-action="ExportToXML">

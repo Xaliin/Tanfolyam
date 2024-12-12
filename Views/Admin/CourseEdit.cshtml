@@ -4,12 +4,10 @@
     ViewData["Title"] = "CourseEdit";
 }
 
-<h1>CourseEdit</h1>
-
-<h4>Course</h4>
+<h1>Kiválasztott kurzus adatainak módosítása</h1>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-4 form-bg">
         <form asp-action="CourseEdit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" name="courseId" asp-for="Id" />
@@ -21,7 +19,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Teacher" class="control-label form-label">Kijelölt oktató</label>
-                <select asp-for="Teacher" name="teacherId" class="form-control form-input" asp-items="ViewBag.Teachers"></select>
+                <select asp-for="Teacher" name="teacherId" class="form-control form-input" value="@Model.Teacher" asp-items="ViewBag.Teachers"></select>
                 <span asp-validation-for="Teacher" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -50,14 +48,14 @@
                 <span asp-validation-for="Schedule.RegistrationDeadline" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary save-btn" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Vissza a listára</a>
 </div>
 
 @section Scripts {

@@ -24,19 +24,18 @@
 </section>
 <section>
     <h3>Statisztika</h3>
-    idejönnek a diagrammok
 </section>
 
-<h1>Teacher Student Pie Chart</h1>
+<h4>Tanárok kurzusaira járó alkalmazottak száma</h4>
 
 <form id="dateFilterForm">
-    <label for="startDate">Start Date:</label>
-    <input type="datetime-local" id="startDate" name="startDate" required>
+    <label for="startDate">Ettől:</label>
+    <input type="datetime-local" class="admininput" id="startDate" name="startDate" required>
     
-    <label for="endDate">End Date:</label>
-    <input type="datetime-local" id="endDate" name="endDate" required>
+    <label for="endDate">Eddig:</label>
+    <input type="datetime-local" class="admininput" id="endDate" name="endDate" required>
     
-    <button type="button" onclick="fetchChartData()">Get Chart</button>
+    <button type="button" onclick="fetchChartData()" class="save-btn">Lekérés</button>
 </form>
 
 <canvas id="teacherPieChart" width="400" height="400"></canvas>
@@ -119,16 +118,16 @@ function fetchChartData() {
 }
 </script>
 
-<h1>Course income chart </h1>
+<h4>Kurzusok szerinti bevétel</h4>
 
 <form id="incomeDateFilterForm">
-    <label for="startDate">Start Date:</label>
-    <input type="datetime-local" id="incomeStartDate" name="startDate" required>
+    <label for="startDate">Ettől:</label>
+    <input type="datetime-local" class="admininput" id="incomeStartDate" name="startDate" required>
     
-    <label for="endDate">End Date:</label>
-    <input type="datetime-local" id="incomeEndDate" name="endDate" required>
+    <label for="endDate">Eddig:</label>
+    <input type="datetime-local" class="admininput" id="incomeEndDate" name="endDate" required>
     
-    <button type="button" onclick="fetchCourseIncomeData()">Get Chart</button>
+    <button type="button" onclick="fetchCourseIncomeData()" class="save-btn">Lekérés</button>
 </form>
 
 <canvas id="courseIncomeChart" width="400" height="400"></canvas>

@@ -2,17 +2,30 @@
 <TanfolyamXml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Courses>
     <CourseXml>
-      <Id>2</Id>
-      <Name>Tanfolyam2</Name>
-      <Type>Offline</Type>
-      <Description>T2</Description>
-      <Teacher>Tanár1</Teacher>
-      <StudentCount>4</StudentCount>
-      <Status>Active</Status>
+      <Id>1</Id>
+      <Name>Kiberbiztonság + +</Name>
+      <Type>Online</Type>
+      <Description>Haladó kiberbiztonsági továbbképzés.</Description>
+      <Teacher>Kiss Mónika</Teacher>
+      <StudentCount>1</StudentCount>
+      <Status>Inactive</Status>
       <LengthInHour>2</LengthInHour>
-      <RegistrationDeadline>2024-12-18T06:20:00</RegistrationDeadline>
-      <Start>2024-12-13T08:20:00</Start>
-      <End>2024-12-15T08:20:00</End>
+      <RegistrationDeadline>2024-12-27T10:30:00</RegistrationDeadline>
+      <Start xsi:nil="true" />
+      <End xsi:nil="true" />
+    </CourseXml>
+    <CourseXml>
+      <Id>2</Id>
+      <Name>C# alapok</Name>
+      <Type>Offline</Type>
+      <Description>C# alapok, tételek megértése.</Description>
+      <Teacher>Kiss Mónika</Teacher>
+      <StudentCount>1</StudentCount>
+      <Status>Inactive</Status>
+      <LengthInHour>10</LengthInHour>
+      <RegistrationDeadline>2025-01-05T00:00:00</RegistrationDeadline>
+      <Start xsi:nil="true" />
+      <End xsi:nil="true" />
     </CourseXml>
   </Courses>
 </TanfolyamXml>

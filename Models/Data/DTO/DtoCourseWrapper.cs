@@ -26,12 +26,13 @@ namespace Tanfolyam.Models.Data.DTO
 
         public override string ToString()
         {
-            return $"Name: {Course.Name}\n" +
-               $"Type: {Course.Type}\n" +
-               $"Teacher: {Course.Teacher}\n" +
-               $"Description {Course.Description}\n" +
-               $"Space: {Course.StudentCount} / {TanfolyamConstants.HeadcountMaximum}\n" +
-               $"Status: {Course.Status}";
+            return $"{Course.Name} |\n" +
+               $"{Course.Type} |\n" +
+               $"Oktató: {Course.Teacher} |\n" +
+               $"Téma: {Course.Description} |\n" +
+               $"Ár: {Course.Price} Ft |\n" +
+               $"{Course.StudentCount} / {TanfolyamConstants.HeadcountMaximum} fő |\n" +
+               $"Státusz: {Course.Status} ";
         }
 
         private bool DetermineIfEnrollButtonShouldBeDisabled()
